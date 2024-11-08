@@ -1,29 +1,31 @@
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 import { swagger } from "@elysiajs/swagger";
-import { jwt } from "@elysiajs/jwt";
-import bcrypt from "bcrypt";
-import { supabase } from "./libs/supabase";
 import { auth } from "./modules/auth";
-import { tasks } from "./modules/tasks";
+import { claps } from "./modules/claps";
+import { comments } from "./modules/comments";
+import { ideas } from "./modules/ideas";
+import { users } from "./modules/users";
 
-console.log(process.env.SUPABASE_CONNECTION_STRING);
+const { PORT } = process.env;
 
 const app = new Elysia()
 	.use(
 		swagger({
 			documentation: {
 				info: {
-					title: "Task Management API",
-					description:
-						"API for user authentication and task management",
+					title: "Ideas API",
+					description: "API for Ideas",
 					version: "1.0.0",
 				},
 			},
 		})
 	)
 	.use(auth)
-	.use(tasks)
-	.listen(3000);
+	.use(ideas)
+	.use(comments)
+	.use(users)
+	.use(claps)
+	.listen(PORT || 4000);
 
 console.log(
 	`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`

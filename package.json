@@ -18,7 +18,8 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/pg": "^8.11.10",
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "supabase": ">1.8.1"
   },
   "module": "src/index.js"
 }
