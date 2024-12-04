@@ -27,13 +27,11 @@ export const ideas = (app: Elysia) =>
 			.post(
 				"/create",
 				async ({ body, cookie: { access_token } }) => {
-					const { data: user, error: userError } =
-						await supabase.auth.getUser(access_token.value);
+					// const { data: user, error: userError } =
+					// 	await supabase.auth.getUser(access_token.value);
 
-					if (userError) return userError;
-
+					// if (userError) return userError;
 					const { error } = await supabase.from("ideas").insert({
-						user_id: user.user.id,
 						...body,
 					});
 					if (error) return error;
@@ -41,6 +39,7 @@ export const ideas = (app: Elysia) =>
 				},
 				{
 					body: t.Object({
+						user_id: t.String(),
 						title: t.String({ maxLength: 255 }),
 						content: t.String(),
 						subtitle: t.Optional(t.String({ maxLength: 255 })),

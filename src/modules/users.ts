@@ -5,6 +5,13 @@ import { supabase } from "../libs/supabase";
 export const users = (app: Elysia) =>
 	app.group("/users", (app) =>
 		app
+			.get("", async () => {
+				const { data, error } = await supabase
+					.from("users")
+					.select("id, username, profile_image_url");
+				if (error) return error;
+				return data;
+			})
 			// Get user profile by id
 			.get("/:id", async ({ params }) => {
 				const { data, error } = await supabase
@@ -15,6 +22,23 @@ export const users = (app: Elysia) =>
 				if (error) return error;
 				return data;
 			})
+			.post(
+				"",
+				async ({ body }) => {
+					const {} = await supabase.from("users").insert({
+						...body,
+					});
+				},
+				{
+					body: t.Object({
+						email: t.Optional(t.String()),
+						profile_image_url: t.Optional(t.String()),
+						provider: t.Optional(t.String()),
+						provider_id: t.Optional(t.String()),
+						username: t.String(),
+					}),
+				}
+			)
 			// Update user's profile image
 			.put(
 				"/:id/update-profile-image",

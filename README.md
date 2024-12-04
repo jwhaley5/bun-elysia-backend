@@ -39,6 +39,8 @@ bun install
     SUPABASE_SERVICE_ROLE_KEY=<your-service-role-key>
     PORT=3000  # Optional, default is 3000
     JWT_SECRET=<your-jwt-secret>  # Secret for signing JWT tokens
+    task_db_service_role=<your-service-role-key>
+    task_db_url=<your-supabase-url>
     ```
 
     - **`SUPABASE_URL`**: Your Supabase project URL.
